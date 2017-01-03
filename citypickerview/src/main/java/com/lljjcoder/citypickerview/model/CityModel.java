@@ -5,6 +5,7 @@ import java.util.List;
 public class CityModel {
 	private String name;
 	private List<DistrictModel> districtList;
+	private String zipcode;
 	
 	public CityModel() {
 		super();
@@ -22,6 +23,13 @@ public class CityModel {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+	public String getZipcode() {
+		return zipcode;
+	}
+
+	public void setZipcode(String zipcode) {
+		this.zipcode = zipcode;
 	}
 
 	public List<DistrictModel> getDistrictList() {

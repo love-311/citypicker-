@@ -5,6 +5,7 @@ import android.content.res.AssetManager;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -93,7 +94,7 @@ public class CityPicker implements CanShow, OnWheelChangedListener {
     protected String mCurrentDistrictName = "";
 
     /**
-     * 当前区的邮政编码
+     * 当前区的行政区域代码
      */
     protected String mCurrentZipCode = "";
 
@@ -689,6 +690,10 @@ public class CityPicker implements CanShow, OnWheelChangedListener {
                     List<DistrictModel> districtList = cityList.get(0).getDistrictList();
                     mCurrentDistrictName = districtList.get(0).getName();
                     mCurrentZipCode = districtList.get(0).getZipcode();
+                    Log.d("CityPicker", mCurrentZipCode);
+                } else {
+                    //mCurrentZipCode = cityList.get(0).getZipcode();
+                    Log.d("CityPicker", mCurrentZipCode);
                 }
             }
             //*/
@@ -764,10 +769,10 @@ public class CityPicker implements CanShow, OnWheelChangedListener {
         } else {
             mViewDistrict.setCurrentItem(0);
             //获取第一个区名称
-            if (mDistrictDatasMap.get(mCurrentCityName).length>0){
+            if (mDistrictDatasMap.get(mCurrentCityName).length > 0) {
                 //获取第一个区名称
                 mCurrentDistrictName = mDistrictDatasMap.get(mCurrentCityName)[0];
-            }else {
+            } else {
                 mCurrentDistrictName = "";
             }
         }
@@ -845,6 +850,8 @@ public class CityPicker implements CanShow, OnWheelChangedListener {
             updateCities();
         } else if (wheel == mViewCity) {
             updateAreas();
+            //mCurrentZipCode = mZipcodeDatasMap1.get(mCurrentProviceName + mCurrentCityName);
+            //Log.d("CityPicker", mCurrentZipCode);
         } else if (wheel == mViewDistrict) {
             mCurrentDistrictName = mDistrictDatasMap.get(mCurrentCityName)[newValue];
 //            JLogUtils.D("zipcode key: " + mCurrentProviceName + mCurrentCityName + mCurrentDistrictName);
