@@ -5,12 +5,12 @@ import com.lljjcoder.citypickerview.model.CityModel;
 import com.lljjcoder.citypickerview.model.DistrictModel;
 import com.lljjcoder.citypickerview.model.ProvinceModel;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 
@@ -50,6 +50,7 @@ public class XmlParserHandler extends DefaultHandler {
 			cityModel = new CityModel();
 			cityModel.setName(attributes.getValue(0));
 			cityModel.setDistrictList(new ArrayList<DistrictModel>());
+			cityModel.setZipcode(attributes.getValue(1));
 		} else if (qName.equals("district")) {
 			districtModel = new DistrictModel();
 			districtModel.setName(attributes.getValue(0));

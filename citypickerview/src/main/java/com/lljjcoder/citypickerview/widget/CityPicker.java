@@ -175,17 +175,17 @@ public class CityPicker implements CanShow, OnWheelChangedListener {
     /**
      * 第一次默认的显示省份，一般配合定位，使用
      */
-    private String defaultProvinceName = "江苏";
+    private String defaultProvinceName = "四川";
 
     /**
      * 第一次默认得显示城市，一般配合定位，使用
      */
-    private String defaultCityName = "常州";
+    private String defaultCityName = "绵阳";
 
     /**
      * 第一次默认得显示，一般配合定位，使用
      */
-    private String defaultDistrict = "新北区";
+    private String defaultDistrict = "涪城区";
 
     /**
      * 两级联动
@@ -707,20 +707,27 @@ public class CityPicker implements CanShow, OnWheelChangedListener {
                     // 遍历省下面的所有市的数据
                     cityNames[j] = cityList.get(j).getName();
                     List<DistrictModel> districtList = cityList.get(j).getDistrictList();
+
                     String[] distrinctNameArray = new String[districtList.size()];
                     DistrictModel[] distrinctArray = new DistrictModel[districtList.size()];
-                    for (int k = 0; k < districtList.size(); k++) {
-                        // 遍历市下面所有区/县的数据
-                        DistrictModel districtModel = new DistrictModel(districtList.get(k).getName(),
-                                districtList.get(k).getZipcode());
-                        // 区/县对于的邮编，保存到mZipcodeDatasMap
+                    if (districtList.size()==0){
+                        Log.d("CityPicker", "0");
+                            mZipcodeDatasMap.put(mProvinceDatas[i] + cityNames[j] ,
+                                    cityList.get(j).getZipcode());
+                    }else {
+                        for (int k = 0; k < districtList.size(); k++) {
+                            // 遍历市下面所有区/县的数据
+                            DistrictModel districtModel = new DistrictModel(districtList.get(k).getName(),
+                                    districtList.get(k).getZipcode());
+                            // 区/县对于的邮编，保存到mZipcodeDatasMap
 //                        JLogUtils.D("zipcode: " + mProvinceDatas[i] + cityNames[j] +
 //                                districtList.get(k).getName() + "  " + districtList.get(k).getZipcode());
-                        mZipcodeDatasMap.put(mProvinceDatas[i] + cityNames[j] +
-                                        districtList.get(k).getName(),
-                                districtList.get(k).getZipcode());
-                        distrinctArray[k] = districtModel;
-                        distrinctNameArray[k] = districtModel.getName();
+                            mZipcodeDatasMap.put(mProvinceDatas[i] + cityNames[j] +
+                                            districtList.get(k).getName(),
+                                    districtList.get(k).getZipcode());
+                            distrinctArray[k] = districtModel;
+                            distrinctNameArray[k] = districtModel.getName();
+                        }
                     }
                     // 市-区/县的数据，保存到mDistrictDatasMap
                     mDistrictDatasMap.put(cityNames[j], distrinctNameArray);
@@ -850,7 +857,7 @@ public class CityPicker implements CanShow, OnWheelChangedListener {
             updateCities();
         } else if (wheel == mViewCity) {
             updateAreas();
-            //mCurrentZipCode = mZipcodeDatasMap1.get(mCurrentProviceName + mCurrentCityName);
+            mCurrentZipCode = mZipcodeDatasMap.get(mCurrentProviceName + mCurrentCityName);
             //Log.d("CityPicker", mCurrentZipCode);
         } else if (wheel == mViewDistrict) {
             mCurrentDistrictName = mDistrictDatasMap.get(mCurrentCityName)[newValue];
